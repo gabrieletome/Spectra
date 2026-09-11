@@ -430,12 +430,12 @@ setMethod(
 
     names(col) <- unique(v$rtime)
     col_df <- stack(col)
-    if(nrow(col_df) != length(unique(v$rtime))){
+    if(nrow(col_df) == nrow(v)){
         col_df$values <- factor(col_df$values, levels = unique(col_df$values))
         v$color <- col_df$values
     } else {
         names(col_df) <- c("color", "rtime")
-        v <- merge(v, col_df)
+        v <- merge(v, col_df, by = "rtime")
     }
 
     gg <- ggplot(v, aes(x = mz, y = intensity_orient)) +
@@ -550,7 +550,7 @@ setMethod(
 
     names(col) <- unique(v$rtime)
     col_df <- stack(col)
-    if(nrow(col_df) != length(unique(v$rtime))){
+    if(nrow(col_df) == nrow(v)){
         v$color <- col_df$values
     } else {
         names(col_df) <- c("color", "rtime")
